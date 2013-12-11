@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GerenciadorTarefas.Models
 {
-    class Tarefa : INotifyPropertyChanged
+    public class Tarefa : INotifyPropertyChanged
     {
         public int Id { get; set; }
 
@@ -20,7 +20,8 @@ namespace GerenciadorTarefas.Models
             {
                 if (_descricao != value)
                 {
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Descricao"));
+                    if (PropertyChanged != null)
+                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Descricao"));
                 }
                 _descricao = value;
             }
@@ -31,7 +32,11 @@ namespace GerenciadorTarefas.Models
             get { return _inicio; }
             set
             {
-                if (_inicio != value) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Inicio"));
+                if (_inicio != value)
+                {
+                    if (PropertyChanged != null)
+                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Inicio"));
+                }
                 _inicio = value;
             }
         }
@@ -41,7 +46,11 @@ namespace GerenciadorTarefas.Models
             get { return _fim; }
             set
             {
-                if (_fim != value) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Fim"));
+                if (_fim != value)
+                {
+                    if (PropertyChanged != null)
+                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Fim"));
+                }
                 _fim = value;
             }
         }
@@ -51,7 +60,11 @@ namespace GerenciadorTarefas.Models
             get { return _status; }
             set
             {
-                if (_status != value) PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Status"));
+                if (_status != value)
+                {
+                    if (PropertyChanged != null)
+                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Status"));
+                }
                 _status = value;
             }
         }
