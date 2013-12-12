@@ -14,10 +14,20 @@ namespace GerenciadorTarefas
 {
     public partial class Form1 : Form
     {
+        private Db db = new Db();
         private TarefaDisplay dragging;
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Ler tarefas do banco
+            foreach (var t in db.Tarefas)
+            {
+                this.AddTarefa(t);
+            }
         }
 
         private void btnCriar_Click(object sender, EventArgs e)
@@ -41,6 +51,8 @@ namespace GerenciadorTarefas
                 Descricao = descricao,
                 Status = Models.Enums.Statuses.NaoIniciada,
             };
+            db.Tarefas.Add(t);
+            db.SaveChangesAsync();
             this.AddTarefa(t);
 
             txtTarefaDescricao.Text = "";
@@ -49,10 +61,29 @@ namespace GerenciadorTarefas
 
         private void AddTarefa(Tarefa t)
         {
+            t.PropertyChanged += TarefaPropertyChanged;
             TarefaDisplay td = new TarefaDisplay(t);
             td.DragStart += DragStart;
             td.DragEnd += DragEnd;
-            pnlNaoIniciadas.Add(td);
+
+            switch (t.Status)
+            {
+                case Statuses.NaoIniciada:
+                    this.pnlNaoIniciadas.Add(td);
+                    break;
+                case Statuses.EmAndamento:
+                    this.pnlEmAndamento.Add(td);
+                    break;
+                case Statuses.Concluida:
+                    this.pnlConcluidas.Add(td);
+                    break;
+            }
+        }
+
+        void TarefaPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Tarefa t = (Tarefa)sender;
+            db.SaveChanges();
         }
 
         void DragStart(TarefaDisplay td, MouseEventArgs e)
@@ -88,5 +119,6 @@ namespace GerenciadorTarefas
                     break;
             }
         }
+
     }
 }

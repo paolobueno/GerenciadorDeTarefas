@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace GerenciadorTarefas.Models
 {
@@ -22,13 +23,14 @@ namespace GerenciadorTarefas.Models
             {
                 if (_descricao != value)
                 {
+                    _descricao = value;
                     InvokePropertyChanged("Descricao");
                 }
-                _descricao = value;
             }
         }
 
-        private DateTime _inicio;
+        [DataType(DataType.DateTime)]
+        private DateTime _inicio = DateTime.Now;
         public DateTime Inicio
         {
             get { return _inicio; }
@@ -36,12 +38,13 @@ namespace GerenciadorTarefas.Models
             {
                 if (_inicio != value)
                 {
+                    _inicio = value;
                     InvokePropertyChanged("Inicio");
                 }
-                _inicio = value;
             }
         }
-        private DateTime _fim;
+        private DateTime _fim = DateTime.Now;
+        [DataType(DataType.DateTime)]
         public DateTime Fim
         {
             get { return _fim; }
@@ -49,9 +52,9 @@ namespace GerenciadorTarefas.Models
             {
                 if (_fim != value)
                 {
+                    _fim = value;
                     InvokePropertyChanged("Fim");
                 }
-                _fim = value;
             }
         }
         private Statuses _status;
@@ -62,9 +65,9 @@ namespace GerenciadorTarefas.Models
             {
                 if (_status != value)
                 {
+                    _status = value;
                     InvokePropertyChanged("Status");
                 }
-                _status = value;
             }
         }
 
@@ -77,9 +80,9 @@ namespace GerenciadorTarefas.Models
             {
                 if (_cor != value)
                 {
+                    _cor = value;
                     InvokePropertyChanged("Cor");
                 }
-                _cor = value;
             }
         }
 
