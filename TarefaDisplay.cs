@@ -38,8 +38,7 @@ namespace GerenciadorTarefas
         public TarefaDisplay(Tarefa tarefa)
             : this()
         {
-            this._tarefa = tarefa;
-            this._tarefa.PropertyChanged += TarefaPropertyChanged;
+            this.Tarefa = tarefa;
         }
 
         void TarefaPropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -94,6 +94,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.lblFim);
             this.Controls.Add(this.lblFimCaption);
             this.Controls.Add(this.lblInicio);
@@ -101,6 +102,7 @@
             this.Controls.Add(this.lblDescricao);
             this.Controls.Add(this.lblId);
             this.Name = "TarefaDisplay";
+            this.Size = new System.Drawing.Size(148, 148);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -9,6 +9,10 @@ namespace GerenciadorTarefas.Models
 {
     class Db : DbContext
     {
+        public Db()
+        {
+
+        }
         public DbSet<Tarefa> Tarefas { get; set; }
     }
 }
