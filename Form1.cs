@@ -16,20 +16,6 @@ namespace GerenciadorTarefas
         public Form1()
         {
             InitializeComponent();
-            Tarefa t = new Tarefa
-            {
-                Inicio = DateTime.Now,
-                Fim = DateTime.Now.AddHours(5),
-                Id = 1,
-                Descricao = "Hello",
-                Status = Models.Enums.Statuses.NaoIniciada
-            };
-            TarefaDisplay td = new TarefaDisplay(t);
-            TarefaDisplay td2 = new TarefaDisplay(t);
-            TarefaDisplay td3 = new TarefaDisplay(t);
-            this.pnlNaoIniciadas.Add(td);
-            this.pnlNaoIniciadas.Add(td2);
-            this.pnlNaoIniciadas.Add(td3);
         }
 
         private void btnCriar_Click(object sender, EventArgs e)
@@ -39,7 +25,30 @@ namespace GerenciadorTarefas
 
         private void CriarTarefa()
         {
-            throw new NotImplementedException();
+            string descricao = txtTarefaDescricao.Text.Trim();
+            if (descricao == "")
+            {
+                MessageBox.Show("Descrição deve ser preenchida!");
+                txtTarefaDescricao.Focus();
+                return;
+            }
+
+            Tarefa t = new Tarefa()
+            {
+                Id = 1,
+                Descricao = descricao,
+                Status = Models.Enums.Statuses.NaoIniciada,
+            };
+            this.AddTarefa(t);
+
+            txtTarefaDescricao.Text = "";
+            txtTarefaDescricao.Focus();
+        }
+
+        private void AddTarefa(Tarefa t)
+        {
+            TarefaDisplay td = new TarefaDisplay(t);
+            pnlNaoIniciadas.Add(td);
         }
     }
 }

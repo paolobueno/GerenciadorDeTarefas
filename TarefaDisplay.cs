@@ -23,13 +23,14 @@ namespace GerenciadorTarefas
                 if (value != null)
                 {
                     if (this._tarefa != null)
-                        this._tarefa.PropertyChanged -= this.TarefaPropertyChanged;
+                        SetEventHandlers();
                     this._tarefa = value;
-                    this._tarefa.PropertyChanged += this.TarefaPropertyChanged;
+                    UnsetEventHandlers();
                     this.Display();
                 }
             }
         }
+
         public TarefaDisplay()
         {
             InitializeComponent();
@@ -39,13 +40,23 @@ namespace GerenciadorTarefas
             : this()
         {
             this.Tarefa = tarefa;
+            this.MouseDown += MDown;
+        }
+
+        private void UnsetEventHandlers()
+        {
+            this._tarefa.PropertyChanged += this.TarefaPropertyChanged;
+        }
+
+        private void SetEventHandlers()
+        {
+            this._tarefa.PropertyChanged -= this.TarefaPropertyChanged;
         }
 
         void TarefaPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             this.Display();
         }
-
         private void Display()
         {
             this.lblId.Text = string.Format("Tarefa #{0}", _tarefa.Id);
@@ -73,6 +84,11 @@ namespace GerenciadorTarefas
                 this.lblFim.Visible = false;
                 this.lblFimCaption.Visible = false;
             }
+        }
+
+        private void MDown(object sender, MouseEventArgs e)
+        {
+            this.DoDragDrop(this.Tarefa, DragDropEffects.Move);
         }
     }
 }

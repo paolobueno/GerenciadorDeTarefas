@@ -10,8 +10,8 @@ namespace GerenciadorTarefas.Models
     class Db : DbContext
     {
         public Db()
+            : base(@"Data Source=(localdb)\v11.0;Initial Catalog=GerenciadorTarefas;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")
         {
-
         }
         public DbSet<Tarefa> Tarefas { get; set; }
     }

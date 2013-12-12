@@ -20,12 +20,12 @@ namespace GerenciadorTarefas.Models
             {
                 if (_descricao != value)
                 {
-                    if (PropertyChanged != null)
-                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Descricao"));
+                    InvokePropertyChanged("Descricao");
                 }
                 _descricao = value;
             }
         }
+
         private DateTime _inicio;
         public DateTime Inicio
         {
@@ -34,8 +34,7 @@ namespace GerenciadorTarefas.Models
             {
                 if (_inicio != value)
                 {
-                    if (PropertyChanged != null)
-                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Inicio"));
+                    InvokePropertyChanged("Inicio");
                 }
                 _inicio = value;
             }
@@ -48,8 +47,7 @@ namespace GerenciadorTarefas.Models
             {
                 if (_fim != value)
                 {
-                    if (PropertyChanged != null)
-                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Fim"));
+                    InvokePropertyChanged("Fim");
                 }
                 _fim = value;
             }
@@ -62,13 +60,17 @@ namespace GerenciadorTarefas.Models
             {
                 if (_status != value)
                 {
-                    if (PropertyChanged != null)
-                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Status"));
+                    InvokePropertyChanged("Status");
                 }
                 _status = value;
             }
         }
 
+        private void InvokePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

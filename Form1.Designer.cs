@@ -31,8 +31,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtTarefaDescricao = new System.Windows.Forms.TextBox();
             this.btnCriar = new System.Windows.Forms.Button();
-            this.painel2 = new GerenciadorTarefas.Painel();
-            this.painel1 = new GerenciadorTarefas.Painel();
+            this.pnlConcluidas = new GerenciadorTarefas.Painel();
+            this.pnlEmAndamento = new GerenciadorTarefas.Painel();
             this.pnlNaoIniciadas = new GerenciadorTarefas.Painel();
             this.SuspendLayout();
             // 
@@ -62,29 +62,29 @@
             this.btnCriar.UseVisualStyleBackColor = true;
             this.btnCriar.Click += new System.EventHandler(this.btnCriar_Click);
             // 
-            // painel2
+            // pnlConcluidas
             // 
-            this.painel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlConcluidas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.painel2.AutoScroll = true;
-            this.painel2.Location = new System.Drawing.Point(540, 40);
-            this.painel2.Name = "painel2";
-            this.painel2.Size = new System.Drawing.Size(261, 507);
-            this.painel2.Status = GerenciadorTarefas.Models.Enums.Statuses.Concluida;
-            this.painel2.TabIndex = 2;
+            this.pnlConcluidas.AutoScroll = true;
+            this.pnlConcluidas.Location = new System.Drawing.Point(540, 40);
+            this.pnlConcluidas.Name = "pnlConcluidas";
+            this.pnlConcluidas.Size = new System.Drawing.Size(261, 507);
+            this.pnlConcluidas.Status = GerenciadorTarefas.Models.Enums.Statuses.Concluida;
+            this.pnlConcluidas.TabIndex = 2;
             // 
-            // painel1
+            // pnlEmAndamento
             // 
-            this.painel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlEmAndamento.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.painel1.AutoScroll = true;
-            this.painel1.Location = new System.Drawing.Point(279, 40);
-            this.painel1.Name = "painel1";
-            this.painel1.Size = new System.Drawing.Size(255, 507);
-            this.painel1.Status = GerenciadorTarefas.Models.Enums.Statuses.EmAndamento;
-            this.painel1.TabIndex = 1;
+            this.pnlEmAndamento.AutoScroll = true;
+            this.pnlEmAndamento.Location = new System.Drawing.Point(279, 40);
+            this.pnlEmAndamento.Name = "pnlEmAndamento";
+            this.pnlEmAndamento.Size = new System.Drawing.Size(255, 507);
+            this.pnlEmAndamento.Status = GerenciadorTarefas.Models.Enums.Statuses.EmAndamento;
+            this.pnlEmAndamento.TabIndex = 1;
             // 
             // pnlNaoIniciadas
             // 
@@ -105,8 +105,8 @@
             this.ClientSize = new System.Drawing.Size(808, 559);
             this.Controls.Add(this.btnCriar);
             this.Controls.Add(this.txtTarefaDescricao);
-            this.Controls.Add(this.painel2);
-            this.Controls.Add(this.painel1);
+            this.Controls.Add(this.pnlConcluidas);
+            this.Controls.Add(this.pnlEmAndamento);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pnlNaoIniciadas);
             this.Name = "Form1";
@@ -120,8 +120,8 @@
 
         private Painel pnlNaoIniciadas;
         private System.Windows.Forms.Label label1;
-        private Painel painel1;
-        private Painel painel2;
+        private Painel pnlEmAndamento;
+        private Painel pnlConcluidas;
         private System.Windows.Forms.TextBox txtTarefaDescricao;
         private System.Windows.Forms.Button btnCriar;
 
