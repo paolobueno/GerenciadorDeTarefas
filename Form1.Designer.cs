@@ -64,6 +64,7 @@
             // 
             // pnlConcluidas
             // 
+            this.pnlConcluidas.AllowDrop = true;
             this.pnlConcluidas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -73,9 +74,11 @@
             this.pnlConcluidas.Size = new System.Drawing.Size(261, 507);
             this.pnlConcluidas.Status = GerenciadorTarefas.Models.Enums.Statuses.Concluida;
             this.pnlConcluidas.TabIndex = 2;
+            this.pnlConcluidas.Dropped += new GerenciadorTarefas.Painel.DroppedHandler(this.painelDropped);
             // 
             // pnlEmAndamento
             // 
+            this.pnlEmAndamento.AllowDrop = true;
             this.pnlEmAndamento.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -85,9 +88,11 @@
             this.pnlEmAndamento.Size = new System.Drawing.Size(255, 507);
             this.pnlEmAndamento.Status = GerenciadorTarefas.Models.Enums.Statuses.EmAndamento;
             this.pnlEmAndamento.TabIndex = 1;
+            this.pnlEmAndamento.Dropped += new GerenciadorTarefas.Painel.DroppedHandler(this.painelDropped);
             // 
             // pnlNaoIniciadas
             // 
+            this.pnlNaoIniciadas.AllowDrop = true;
             this.pnlNaoIniciadas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace GerenciadorTarefas.Models
 {
+    [Serializable]
     public class Tarefa : INotifyPropertyChanged
     {
         public int Id { get; set; }

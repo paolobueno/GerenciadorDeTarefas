@@ -23,7 +23,7 @@ namespace GerenciadorTarefas
                 if (value != null)
                 {
                     if (this._tarefa != null)
-                        SetEventHandlers();
+                        SetTarefaEventHandlers();
                     this._tarefa = value;
                     UnsetEventHandlers();
                     this.Display();
@@ -42,17 +42,15 @@ namespace GerenciadorTarefas
             this.Tarefa = tarefa;
             this.MouseDown += MDown;
             this.DragStart += TarefaDisplay_DragStart;
+            this.DragEnd += TarefaDisplay_DragEnd;
+            // Prevenir cursores de Drag&Drop
+            this.GiveFeedback += TarefaDisplay_GiveFeedback;
         }
 
-        void TarefaDisplay_DragStart(TarefaDisplay td, EventArgs e)
+        private void DisplayComplementar()
         {
-            // Inverter cor
-            this.BackColor = CorComplementar(BackColor);
-        }
-
-        private Color CorComplementar(Color color)
-        {
-            return Color.FromArgb(255 - color.R, 255 - color.G, 255 - color.B);
+            Color cor = this.Tarefa.Cor;
+            this.BackColor = Color.FromArgb(255 - cor.R, 255 - cor.G, 255 - cor.B);
         }
 
         private void UnsetEventHandlers()
@@ -60,7 +58,7 @@ namespace GerenciadorTarefas
             this._tarefa.PropertyChanged += this.TarefaPropertyChanged;
         }
 
-        private void SetEventHandlers()
+        private void SetTarefaEventHandlers()
         {
             this._tarefa.PropertyChanged -= this.TarefaPropertyChanged;
         }
@@ -100,17 +98,35 @@ namespace GerenciadorTarefas
             this.BackColor = Tarefa.Cor;
         }
 
+        public delegate void DragStartHandler(TarefaDisplay sender, MouseEventArgs e);
+        public delegate void DragEndHandler(TarefaDisplay sender, MouseEventArgs e);
+        public event DragStartHandler DragStart;
+        public event DragEndHandler DragEnd;
+        private void TarefaDisplay_DragEnd(TarefaDisplay sender, MouseEventArgs e)
+        {
+            Display();
+        }
+
+        void TarefaDisplay_DragStart(TarefaDisplay td, MouseEventArgs e)
+        {
+            DisplayComplementar();
+        }
         private void MDown(object sender, MouseEventArgs e)
         {
             if (DragStart != null)
             {
-                DragStart.Invoke(this, null);
+                DragStart.Invoke(this, e);
             }
             this.DoDragDrop(this.Tarefa, DragDropEffects.Move);
+            if (DragEnd != null)
+            {
+                DragEnd.Invoke(this, e);
+            }
         }
-
-        public delegate void DragStartHandler(TarefaDisplay td, EventArgs e);
-        public event DragStartHandler DragStart;
+        void TarefaDisplay_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+        {
+            e.UseDefaultCursors = false;
+        }
 
         private void btnColor_Click(object sender, EventArgs e)
         {
@@ -120,6 +136,7 @@ namespace GerenciadorTarefas
                     break;
                 case DialogResult.OK:
                     Tarefa.Cor = this.colorDialog1.Color;
+                    this.Display();
                     break;
                 default:
                     break;

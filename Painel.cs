@@ -24,18 +24,24 @@ namespace GerenciadorTarefas
                 AtualizarLabel();
             }
         }
-
-        private List<TarefaDisplay> tarefas = new List<TarefaDisplay>();
-
         public Painel()
         {
             InitializeComponent();
             this.panel.ColumnCount = 1;
+            this.panel.ControlAdded += QteControlesMudada;
+            this.panel.ControlRemoved += QteControlesMudada;
+        }
+
+        private void QteControlesMudada(object sender, ControlEventArgs e)
+        {
+            AtualizarLabel();
+            // TableLayoutPanel já cria 1 row por controle adicionado
+            // mas não as remove conforme os filhos vao embora
+            this.panel.RowCount = this.panel.Controls.Count;
         }
 
         public void Add(TarefaDisplay tarefa)
         {
-            this.tarefas.Add(tarefa);
             this.panel.Controls.Add(tarefa);
 
             AtualizarLabel();
@@ -59,7 +65,54 @@ namespace GerenciadorTarefas
                 default:
                     break;
             }
-            this.lblDescricao.Text = String.Format("{0}({1})", desc, this.tarefas.Count);
+            this.lblDescricao.Text = String.Format("{0}({1})", desc, this.panel.Controls.Count);
+        }
+
+        private void Painel_DragEnter(object sender, DragEventArgs e)
+        {
+            this.BackColor = Color.Red;
+            if (e.Data.GetDataPresent(typeof(Tarefa)))
+            {
+                Tarefa data = (Tarefa)e.Data.GetData(typeof(Tarefa));
+                if (CanDrop(data))
+                {
+                    this.BackColor = Color.Green;
+                    e.Effect = DragDropEffects.Move;
+                }
+            }
+        }
+
+        private void Painel_DragLeave(object sender, EventArgs e)
+        {
+            ResetColor();
+        }
+
+        public delegate void DroppedHandler(Painel painel, DragEventArgs e);
+        public event DroppedHandler Dropped;
+        private void Painel_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(Tarefa)))
+            {
+                Tarefa data = (Tarefa)e.Data.GetData(typeof(Tarefa));
+                if (CanDrop(data))
+                {
+                    ResetColor();
+                    if (Dropped != null)
+                    {
+                        Dropped.Invoke(this, e);
+                    }
+                }
+            }
+        }
+
+        private bool CanDrop(Tarefa t)
+        {
+            // Deixar tarefa andar 1 status
+            return t.Status + 1 == this.Status;
+        }
+        private void ResetColor()
+        {
+            this.BackColor = SystemColors.Control;
         }
     }
 }

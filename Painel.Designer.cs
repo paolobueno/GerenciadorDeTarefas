@@ -65,6 +65,9 @@
             this.Controls.Add(this.panel);
             this.Name = "Painel";
             this.Size = new System.Drawing.Size(207, 194);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Painel_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Painel_DragEnter);
+            this.DragLeave += new System.EventHandler(this.Painel_DragLeave);
             this.ResumeLayout(false);
             this.PerformLayout();
 

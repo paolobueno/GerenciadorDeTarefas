@@ -1,4 +1,5 @@
 ﻿using GerenciadorTarefas.Models;
+using GerenciadorTarefas.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace GerenciadorTarefas
 {
     public partial class Form1 : Form
     {
+        private TarefaDisplay dragging;
         public Form1()
         {
             InitializeComponent();
@@ -48,7 +50,43 @@ namespace GerenciadorTarefas
         private void AddTarefa(Tarefa t)
         {
             TarefaDisplay td = new TarefaDisplay(t);
+            td.DragStart += DragStart;
+            td.DragEnd += DragEnd;
             pnlNaoIniciadas.Add(td);
+        }
+
+        void DragStart(TarefaDisplay td, MouseEventArgs e)
+        {
+            this.dragging = td;
+            this.Cursor = Cursors.SizeAll;
+        }
+
+        void DragEnd(TarefaDisplay td, MouseEventArgs e)
+        {
+            this.dragging = null;
+            this.Cursor = Cursors.Default;
+        }
+
+        private void painelDropped(Painel painel, DragEventArgs e)
+        {
+            painel.Add(this.dragging);
+
+            Tarefa t = this.dragging.Tarefa;
+            t.Status = painel.Status;
+            UpdateTempos(t);
+        }
+
+        private static void UpdateTempos(Tarefa t)
+        {
+            switch (t.Status)
+            {
+                case Statuses.EmAndamento:
+                    t.Inicio = DateTime.Now;
+                    break;
+                case Statuses.Concluida:
+                    t.Fim = DateTime.Now;
+                    break;
+            }
         }
     }
 }
