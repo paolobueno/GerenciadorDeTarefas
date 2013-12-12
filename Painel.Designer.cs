@@ -60,6 +60,7 @@
             // 
             // Painel
             // 
+            this.AllowDrop = true;
             this.Controls.Add(this.lblDescricao);
             this.Controls.Add(this.panel);
             this.Name = "Painel";

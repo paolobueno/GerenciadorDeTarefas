@@ -34,6 +34,8 @@
             this.lblInicio = new System.Windows.Forms.Label();
             this.lblFim = new System.Windows.Forms.Label();
             this.lblFimCaption = new System.Windows.Forms.Label();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.btnColor = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblId
@@ -48,7 +50,7 @@
             // lblDescricao
             // 
             this.lblDescricao.AutoSize = true;
-            this.lblDescricao.Location = new System.Drawing.Point(4, 17);
+            this.lblDescricao.Location = new System.Drawing.Point(4, 32);
             this.lblDescricao.Name = "lblDescricao";
             this.lblDescricao.Size = new System.Drawing.Size(67, 13);
             this.lblDescricao.TabIndex = 1;
@@ -57,7 +59,7 @@
             // lblInicioCaption
             // 
             this.lblInicioCaption.AutoSize = true;
-            this.lblInicioCaption.Location = new System.Drawing.Point(4, 45);
+            this.lblInicioCaption.Location = new System.Drawing.Point(4, 63);
             this.lblInicioCaption.Name = "lblInicioCaption";
             this.lblInicioCaption.Size = new System.Drawing.Size(34, 13);
             this.lblInicioCaption.TabIndex = 2;
@@ -66,7 +68,7 @@
             // lblInicio
             // 
             this.lblInicio.AutoSize = true;
-            this.lblInicio.Location = new System.Drawing.Point(4, 58);
+            this.lblInicio.Location = new System.Drawing.Point(4, 76);
             this.lblInicio.Name = "lblInicio";
             this.lblInicio.Size = new System.Drawing.Size(110, 13);
             this.lblInicio.TabIndex = 3;
@@ -75,7 +77,7 @@
             // lblFim
             // 
             this.lblFim.AutoSize = true;
-            this.lblFim.Location = new System.Drawing.Point(4, 91);
+            this.lblFim.Location = new System.Drawing.Point(4, 109);
             this.lblFim.Name = "lblFim";
             this.lblFim.Size = new System.Drawing.Size(110, 13);
             this.lblFim.TabIndex = 5;
@@ -84,17 +86,28 @@
             // lblFimCaption
             // 
             this.lblFimCaption.AutoSize = true;
-            this.lblFimCaption.Location = new System.Drawing.Point(4, 78);
+            this.lblFimCaption.Location = new System.Drawing.Point(4, 96);
             this.lblFimCaption.Name = "lblFimCaption";
             this.lblFimCaption.Size = new System.Drawing.Size(23, 13);
             this.lblFimCaption.TabIndex = 4;
             this.lblFimCaption.Text = "Fim";
+            // 
+            // btnColor
+            // 
+            this.btnColor.Location = new System.Drawing.Point(111, 3);
+            this.btnColor.Name = "btnColor";
+            this.btnColor.Size = new System.Drawing.Size(34, 23);
+            this.btnColor.TabIndex = 6;
+            this.btnColor.Text = "Cor";
+            this.btnColor.UseVisualStyleBackColor = true;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
             // 
             // TarefaDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Controls.Add(this.btnColor);
             this.Controls.Add(this.lblFim);
             this.Controls.Add(this.lblFimCaption);
             this.Controls.Add(this.lblInicio);
@@ -102,7 +115,7 @@
             this.Controls.Add(this.lblDescricao);
             this.Controls.Add(this.lblId);
             this.Name = "TarefaDisplay";
-            this.Size = new System.Drawing.Size(148, 148);
+            this.Size = new System.Drawing.Size(148, 129);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -116,5 +129,7 @@
         private System.Windows.Forms.Label lblInicio;
         private System.Windows.Forms.Label lblFim;
         private System.Windows.Forms.Label lblFimCaption;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button btnColor;
     }
 }

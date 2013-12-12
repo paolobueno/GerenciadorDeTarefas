@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,6 +64,21 @@ namespace GerenciadorTarefas.Models
                     InvokePropertyChanged("Status");
                 }
                 _status = value;
+            }
+        }
+
+        private Color _cor = Color.Beige;
+
+        public Color Cor
+        {
+            get { return _cor; }
+            set
+            {
+                if (_cor != value)
+                {
+                    InvokePropertyChanged("Cor");
+                }
+                _cor = value;
             }
         }
 
