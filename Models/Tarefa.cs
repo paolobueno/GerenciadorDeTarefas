@@ -13,6 +13,22 @@ namespace GerenciadorTarefas.Models
     [Serializable]
     public class Tarefa : INotifyPropertyChanged
     {
+        public Tarefa()
+        {
+            // Valores default;
+            this.Id = 1;
+
+            Color defaultColor = Color.Beige;
+            CopyColor(defaultColor);
+        }
+
+        private void CopyColor(Color color)
+        {
+            this.R = color.R;
+            this.G = color.G;
+            this.B = color.B;
+        }
+
         public int Id { get; set; }
 
         private String _descricao = "";
@@ -71,20 +87,24 @@ namespace GerenciadorTarefas.Models
             }
         }
 
-        private Color _cor = Color.Beige;
-
         public Color Cor
         {
-            get { return _cor; }
+            get { return Color.FromArgb(R, G, B); }
             set
             {
-                if (_cor != value)
+                if (Cor != value)
                 {
-                    _cor = value;
+                    CopyColor(value);
                     InvokePropertyChanged("Cor");
                 }
             }
         }
+
+        // Dividimos a propriedade Cor em 3 componentes já que
+        // a Entity não persiste tipos complexos automaticamente
+        public byte R { get; set; }
+        public byte G { get; set; }
+        public byte B { get; set; }
 
         private void InvokePropertyChanged(string propertyName)
         {
