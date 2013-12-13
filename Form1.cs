@@ -82,15 +82,28 @@ namespace GerenciadorTarefas
             }
         }
 
+        #region EventHandlers
+        /// <summary>
+        /// Ouve por mudanças em todas as tarefas, persistindo-as imediatamente no banco de dados
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void TarefaPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Tarefa t = (Tarefa)sender;
             db.SaveChanges();
         }
-
+        /// <summary>
+        /// Configura o cursor corrento quando o drag começa
+        /// </summary>
+        /// <param name="td"></param>
+        /// <param name="e"></param>
         void DragStart(TarefaDisplay td, MouseEventArgs e)
         {
             this.dragging = td;
+
+            ShowBalloonTip(td);
+
             this.Cursor = Cursors.SizeAll;
         }
 
@@ -108,7 +121,24 @@ namespace GerenciadorTarefas
             t.Status = painel.Status;
             UpdateTempos(t);
         }
+        #endregion
 
+        private void ShowBalloonTip(TarefaDisplay td)
+        {
+            string message = "";
+            switch (td.Tarefa.Status)
+            {
+                case Statuses.NaoIniciada:
+                    message = "Em Andamento";
+                    break;
+                case Statuses.EmAndamento:
+                    message = "Concluída";
+                    break;
+            }
+
+            this.notifyIcon1.BalloonTipText = String.Format("Esta tarefa pode se tornar '{0}'", message);
+            this.notifyIcon1.ShowBalloonTip(1000);
+        }
         private static void UpdateTempos(Tarefa t)
         {
             switch (t.Status)

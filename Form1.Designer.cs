@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.txtTarefaDescricao = new System.Windows.Forms.TextBox();
             this.btnCriar = new System.Windows.Forms.Button();
             this.pnlConcluidas = new GerenciadorTarefas.Painel();
             this.pnlEmAndamento = new GerenciadorTarefas.Painel();
             this.pnlNaoIniciadas = new GerenciadorTarefas.Painel();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -69,6 +72,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlConcluidas.AutoScroll = true;
+            this.pnlConcluidas.BackColor = System.Drawing.SystemColors.Control;
             this.pnlConcluidas.Location = new System.Drawing.Point(540, 40);
             this.pnlConcluidas.Name = "pnlConcluidas";
             this.pnlConcluidas.Size = new System.Drawing.Size(261, 507);
@@ -83,6 +87,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlEmAndamento.AutoScroll = true;
+            this.pnlEmAndamento.BackColor = System.Drawing.SystemColors.Control;
             this.pnlEmAndamento.Location = new System.Drawing.Point(279, 40);
             this.pnlEmAndamento.Name = "pnlEmAndamento";
             this.pnlEmAndamento.Size = new System.Drawing.Size(255, 507);
@@ -97,11 +102,20 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlNaoIniciadas.AutoScroll = true;
+            this.pnlNaoIniciadas.BackColor = System.Drawing.SystemColors.Control;
             this.pnlNaoIniciadas.Location = new System.Drawing.Point(12, 40);
             this.pnlNaoIniciadas.Name = "pnlNaoIniciadas";
             this.pnlNaoIniciadas.Size = new System.Drawing.Size(261, 507);
             this.pnlNaoIniciadas.Status = GerenciadorTarefas.Models.Enums.Statuses.NaoIniciada;
             this.pnlNaoIniciadas.TabIndex = 0;
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon1.BalloonTipTitle = "Gerenciador de Tarefas";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Gerenciador de Tarefas";
+            this.notifyIcon1.Visible = true;
             // 
             // Form1
             // 
@@ -130,6 +144,7 @@
         private Painel pnlConcluidas;
         private System.Windows.Forms.TextBox txtTarefaDescricao;
         private System.Windows.Forms.Button btnCriar;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
 
 
     }
