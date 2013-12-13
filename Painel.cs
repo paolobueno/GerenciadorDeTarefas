@@ -27,24 +27,15 @@ namespace GerenciadorTarefas
         public Painel()
         {
             InitializeComponent();
-            this.panel.ColumnCount = 1;
             this.panel.ControlAdded += QteControlesMudada;
             this.panel.ControlRemoved += QteControlesMudada;
         }
 
-        private void QteControlesMudada(object sender, ControlEventArgs e)
-        {
-            AtualizarLabel();
-            // TableLayoutPanel já cria 1 row por controle adicionado
-            // mas não as remove conforme os filhos vao embora
-            this.panel.RowCount = this.panel.Controls.Count;
-        }
-
         public void Add(TarefaDisplay tarefa)
         {
+            // Este método é um dos que parece trivial, mas auxilia bastante no encapsulamento
+            // Poderíamos trocar o tipo de panel ou a maneira que as TarefaDisplay são exibidas sem mais problemas
             this.panel.Controls.Add(tarefa);
-
-            AtualizarLabel();
         }
 
         private void AtualizarLabel()
@@ -66,6 +57,20 @@ namespace GerenciadorTarefas
                     break;
             }
             this.lblDescricao.Text = String.Format("{0}({1})", desc, this.panel.Controls.Count);
+        }
+        #region EventHandlers
+
+        /// <summary>
+        /// Mantem a quantidade de rows do TableLayoutPanel atualizada
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void QteControlesMudada(object sender, ControlEventArgs e)
+        {
+            AtualizarLabel();
+            // TableLayoutPanel já cria 1 row por controle adicionado
+            // mas não as remove conforme os filhos vao embora
+            this.panel.RowCount = this.panel.Controls.Count;
         }
 
         private void Painel_DragEnter(object sender, DragEventArgs e)
@@ -105,9 +110,18 @@ namespace GerenciadorTarefas
             }
         }
 
+        #endregion
+
+        /// <summary>
+        /// Método auxiliar para definir regra de permissão de drop
+        /// Reduz duplicação e isola a regra caso ela tenha que ser modificada
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         private bool CanDrop(Tarefa t)
         {
             // Deixar tarefa andar 1 status
+            // Isso se apoia no fato de status sequenciais terem numeros sequenciais
             return t.Status + 1 == this.Status;
         }
         private void ResetColor()

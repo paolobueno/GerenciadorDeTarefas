@@ -18,24 +18,32 @@ namespace GerenciadorTarefas
         public Tarefa Tarefa
         {
             get { return _tarefa; }
+
             set
             {
                 if (value != null)
                 {
+                    // Removemos os Handlers da anterior se a tarefa for trocada
+                    // para parar de observá-la
                     if (this._tarefa != null)
                         SetTarefaEventHandlers();
                     this._tarefa = value;
-                    UnsetEventHandlers();
+                    UnsetTarefaEventHandlers();
                     this.Display();
                 }
             }
         }
 
-        public TarefaDisplay()
+        /// <summary>
+        /// Precisamos manter um construtor sem parâmetros para o Designer funcionar
+        /// Marcamos como 'private' para prevenir acesso indevido
+        /// </summary>
+        private TarefaDisplay()
         {
             InitializeComponent();
         }
 
+        // Herdamos do construtor sem parametros pois InitializeComponent é necessário
         public TarefaDisplay(Tarefa tarefa)
             : this()
         {
@@ -43,30 +51,21 @@ namespace GerenciadorTarefas
             this.MouseDown += MDown;
             this.DragStart += TarefaDisplay_DragStart;
             this.DragEnd += TarefaDisplay_DragEnd;
-            // Prevenir cursores de Drag&Drop
             this.GiveFeedback += TarefaDisplay_GiveFeedback;
         }
 
-        private void DisplayComplementar()
+        /// <summary>
+        /// Exibe cor complementar, desfeito por <see cref="Display"/>
+        /// </summary>
+        public void DisplayComplementar()
         {
             Color cor = this.Tarefa.Cor;
             this.BackColor = Color.FromArgb(255 - cor.R, 255 - cor.G, 255 - cor.B);
         }
 
-        private void UnsetEventHandlers()
-        {
-            this._tarefa.PropertyChanged += this.TarefaPropertyChanged;
-        }
-
-        private void SetTarefaEventHandlers()
-        {
-            this._tarefa.PropertyChanged -= this.TarefaPropertyChanged;
-        }
-
-        void TarefaPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            this.Display();
-        }
+        /// <summary>
+        /// Atualiza a interface para refletir estado da Tarefa
+        /// </summary>
         private void Display()
         {
             this.lblId.Text = string.Format("Tarefa #{0}", _tarefa.Id);
@@ -97,11 +96,31 @@ namespace GerenciadorTarefas
 
             this.BackColor = Tarefa.Cor;
         }
-
+        #region Events
         public delegate void DragStartHandler(TarefaDisplay sender, MouseEventArgs e);
         public delegate void DragEndHandler(TarefaDisplay sender, MouseEventArgs e);
         public event DragStartHandler DragStart;
         public event DragEndHandler DragEnd;
+        #endregion
+
+        #region EventHandlers
+        private void UnsetTarefaEventHandlers()
+        {
+            this._tarefa.PropertyChanged += this.TarefaPropertyChanged;
+        }
+
+        private void SetTarefaEventHandlers()
+        {
+            this._tarefa.PropertyChanged -= this.TarefaPropertyChanged;
+        }
+
+        private void TarefaPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            // Atualizamos a interface em qualquer alteração em Tarefa
+            this.Display();
+        }
+
+        #region Drag&Drop
         private void TarefaDisplay_DragEnd(TarefaDisplay sender, MouseEventArgs e)
         {
             Display();
@@ -111,8 +130,16 @@ namespace GerenciadorTarefas
         {
             DisplayComplementar();
         }
+
+        /// <summary>
+        /// Handler para this.MouseDown
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MDown(object sender, MouseEventArgs e)
         {
+            // Aqui invocamos nossos eventos custom para escapar da estrutura imposta pela framework
+            // para checar o andamento de uma operação drag & drop
             if (DragStart != null)
             {
                 DragStart.Invoke(this, e);
@@ -125,9 +152,17 @@ namespace GerenciadorTarefas
         }
         void TarefaDisplay_GiveFeedback(object sender, GiveFeedbackEventArgs e)
         {
+            // Prevenir cursores gerados pela operação Drag & Drop
             e.UseDefaultCursors = false;
         }
 
+        #endregion
+
+        /// <summary>
+        /// Handler que troca de cor
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnColor_Click(object sender, EventArgs e)
         {
             switch (this.colorDialog1.ShowDialog())
@@ -142,5 +177,6 @@ namespace GerenciadorTarefas
                     break;
             }
         }
+        #endregion
     }
 }

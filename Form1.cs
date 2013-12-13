@@ -15,6 +15,9 @@ namespace GerenciadorTarefas
     public partial class Form1 : Form
     {
         private Db db = new Db();
+        /// <summary>
+        /// Tracking de qual elemento está sendo arrastado
+        /// </summary>
         private TarefaDisplay dragging;
         public Form1()
         {
@@ -47,12 +50,11 @@ namespace GerenciadorTarefas
 
             Tarefa t = new Tarefa()
             {
-                Id = 1,
                 Descricao = descricao,
                 Status = Models.Enums.Statuses.NaoIniciada,
             };
             db.Tarefas.Add(t);
-            db.SaveChangesAsync();
+            db.SaveChanges();
             this.AddTarefa(t);
 
             txtTarefaDescricao.Text = "";
